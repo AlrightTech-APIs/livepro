@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.all',['users'=>User::paginate(10)]);
+        return view('admin.user.all',['users'=>User::all()]);
     }
 
     /**
@@ -37,7 +37,7 @@ class UserController extends Controller
 
         User::create(array_merge($request->except(['_token','password']),['password'=>Hash::make($request->password)]));
 
-        return back()->with('status','user successfully created');
+        return back()->with('success','user successfully created');
 
     }
 
@@ -71,7 +71,7 @@ class UserController extends Controller
         ]);
         $user->update(array_merge($request->except(['_token','password']),['password'=>Hash::make($request->password)]));
 
-        return back()->with('status','user successfully updated');
+        return back()->with('success','user successfully updated');
 
 
     }
@@ -82,6 +82,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        return back()->with('status','user successfully deleted');
+        return back()->with('success','user successfully deleted');
     }
 }

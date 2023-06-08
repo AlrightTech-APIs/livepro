@@ -1,31 +1,20 @@
 @extends('admin.master')
-@section('title','dashboard')
-@section('manage-properties','active')
-<!-- Begin Page Content -->
-@section('links')
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet"/>
-@endsection
 @section('content')
-<div class="container-fluid">
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="row">
+            <div class="col-xl-8 offset-xl-2">
 
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">DNC Management</h1>
-
-        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
-    </div>
-    <div class="row justify-content-center">
-        <!-- Area Chart -->
-        <div class="col-xl-9 col-lg-9">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Add DNC</h6>
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col">
+                            <h3 class="page-title">Add DNC</h3>
+                        </div>
+                    </div>
                 </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <!-- <div class="chart-area"> -->
-                    <div class="container">
+
+                <div class="card">
+                    <div class="card-body">
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -41,42 +30,31 @@
                             {{ session()->get('success') }}
                         </div>
                         @endif
-                        <div class="row justify-content-center">
-                            <div class="col-md-6 col-sm-12">
-                                <form method="POST" action="{{ route('admin.store.dnc') }}" enctype="multipart/form-data">
-                                    <!-- Name input -->
-                                    <div class="form-outline mb-4">
-                                        <input type="tel" id="phone-number" min="0" placeholder="XXX-XXX-XXXX" name="number" value="{{ old('number') }}" id="form4Example1" class="form-control" />
-                                        <label class="form-label" for="form4Example1">Phone Numbers</label>
-                                    </div>
-                                    <div class="form-outline mb-4">
-                                        <input type="text" name="colomn" value="{{ old('colomn') }}" id="form4Example1" class="form-control" />
-                                        <label class="form-label" for="form4Example1">Column Name of Phone Numbers</label>
-                                    </div>
-                                    @csrf
-                                    <div class="form mb-4">
-                                        <label for="formFileMultiple" class="form-label">Upload DNC File</label>
-                                        <input class="form-control" name="dnc" type="file" id="formFileMultiple"/>
-                                    </div>
-                                    <!-- Submit button -->
-                                    <button type="submit" class="btn btn-primary btn-block mb-4" >save</button>
-                                </form>
+                        <form action="{{ route('admin.store.dnc') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label>Number</label>
+                                <input class="form-control" name="number" type="number">
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label>Cloumn</label>
+                                <input class="form-control" name="column" type="number">
+                            </div>
+                            <div class="form-group">
+                                <label>DNC</label>
+                                <input class="form-control" name="dnc" type="file">
+                            </div>
+                            <div class="mt-4">
+                                <button class="btn btn-primary" type="submit">Add DNC</button>
+                                <a href="categories.html" class="btn btn-link">Cancel</a>
+                            </div>
+                        </form>
+
                     </div>
-                    <!-- </div> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- /.container-fluid -->
 @endsection
-<!-- End of Main Content -->
 
-@section('script')
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
-></script>
-@endsection

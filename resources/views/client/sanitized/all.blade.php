@@ -1,114 +1,148 @@
 @extends('client.master')
-@section('title','Manage sanitize')
-@section('links')
-<link href="{{asset('admin/vendor/datatables/dataTables.bootstrap4.css')}}" rel="stylesheet">
-@endsection
-@section('manage-properties','active')
-<!-- Begin Page Content -->
+@section('title','Scrubbeds')
 @section('content')
-
-<!-- main Section for table  -->
-<div class="container-fluid">
-
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-2 text-gray-800">Manage sanitize</h1>
-        {{-- <a href="{{ route('admin.add.dnc') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i> upload new csv</a> --}}
-    </div>
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">All sanitize</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr valign="center">
-                            <th>Id</th>
-                            <th>User Name</th>
-                            <th>File Name</th>
-                            <th>Created</th>
-                            <th style="min-width: 100px;">Action</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Id</th>
-                            <th>User Name</th>
-                            <th>File Name</th>
-                            <th>Created</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @php
-                            $i=1
-                        @endphp
-                        @foreach($sanitized as $sanitize)
-                        <tr>
-                            <td>{{$i++}}</td>
-                            <td>{{$sanitize->user->name}}</td>
-                            <td><a href="{{ url('/').'/'.'storage/'.str_replace('public/','',$sanitize->file) }}" download>{{str_replace('public/sanitized/','',$sanitize->file)}}</a></td>
-                            <td>{{$sanitize->created_at}}</td>
-                            <td>
-                                <div class="row justify-content-around">
-                                    </a><a onclick="$('#delete-dnc-form').attr('action','{{ route('user.delete.sanitized',$sanitize->id) }}')" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fa fa-trash text-danger" style="font-size:20px;" aria-hidden="true"></i>
-                                    </a>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            {{-- <div class="col-xl-3 col-md-4 theiaStickySidebar">
+                <div class="mb-4">
+                    <div class="d-sm-flex flex-row flex-wrap text-center text-sm-start align-items-center">
+                        <img alt="profile image" src="assets/img/provider/provider-01.jpg"
+                            class="avatar-lg rounded-circle">
+                        <div class="ms-sm-3 ms-md-0 ms-lg-3 mt-2 mt-sm-0 mt-md-2 mt-lg-0">
+                            <h6 class="mb-0">Thomas Herzberg</h6>
+                            <p class="text-muted mb-0">Member Since Apr 2020</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget settings-menu">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="provider-dashboard.html" class="nav-link">
+                                <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="my-services.html" class="nav-link">
+                                <i class="far fa-address-book"></i> <span>My Services</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-bookings.html" class="nav-link">
+                                <i class="far fa-calendar-check"></i> <span>Booking List</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-settings.html" class="nav-link">
+                                <i class="far fa-user"></i> <span>Profile Settings</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-wallet.html" class="nav-link">
+                                <i class="far fa-money-bill-alt"></i> <span>Wallet</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-subscription.html" class="nav-link active">
+                                <i class="far fa-calendar-alt"></i> <span>Subscription</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-availability.html" class="nav-link">
+                                <i class="far fa-clock"></i> <span>Availability</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-reviews.html" class="nav-link">
+                                <i class="far fa-star"></i> <span>Reviews</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="provider-payment.html" class="nav-link">
+                                <i class="fas fa-hashtag"></i> <span>Payment</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div> --}}
+            <div class="col-xl-9 col-md-8 m-auto">
+                <div class="row pricing-box">
+                    @foreach ($sanitized as $file)
+                       <div class="col-xl-4 col-md-6 ">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="pricing-header">
+                                    <h2>{{ Str::substr(str_replace('public/sanitized/sanitized_','',$file->file),-25)  }}</h2>
                                 </div>
-                            </td>
-                        </tr>
-                        @endforeach
-
-
-                    </tbody>
-                </table>
+                                <div class="pricing-card-price">
+                                    <p>Scrubbed: <span>{{  $file->created_at->diffForHumans() }}</span></p>
+                                </div>
+                                <a href="{{ Storage::url($file->file) }}" class="btn btn-success btn-block w-100" download="">Download</a>
+                            </div>
+                        </div>
+                    </div> 
+                    @endforeach
+                    
+                </div>
+                {{-- <div class="card">
+                    <div class="card-body">
+                        <div class="plan-det">
+                            <h6 class="title">Plan Details</h6>
+                            <ul class="row">
+                                <li class="col-sm-4">
+                                    <p><span class="text-muted">Started On</span> 15 Jul 2020</p>
+                                </li>
+                                <li class="col-sm-4">
+                                    <p><span class="text-muted">Price</span> $1502.00</p>
+                                </li>
+                                <li class="col-sm-4">
+                                    <p><span class="text-muted">Expired On</span> 15 Jul 2021</p>
+                                </li>
+                            </ul>
+                            <h6 class="title">Last Payment</h6>
+                            <ul class="row">
+                                <li class="col-sm-4">
+                                    <p>Paid at 15 Jul 2020</p>
+                                </li>
+                                <li class="col-sm-4">
+                                    <p><span class="amount">$1502.00 </span> <span
+                                            class="badge bg-success-light">Paid</span></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> --}}
+                <h5 class="mb-4">Subscribed Details</h5>
+                <div class="card transaction-table mb-0">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-center mb-0 no-footer">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Date</th>
+                                        <th>File</th>
+                                        <th>Download</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($sanitized as $file)
+                                    <tr>
+                                        <td>{{ $file->user->name }}</td>
+                                        <td>{{ $file->created_at }}</td>
+                                        <td>{{ str_replace('public/sanitized/sanitized_','',$file->file)  }}</td>
+                                        <td>
+                                            <a href="{{ Storage::url($file->file) }}" class="btn btn-success" download="">Download</a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
-
-<!-- Main Content -->
-<!-- End of Main Content -->
-
-<!-- Footer -->
-<!-- End of Footer -->
-
-<!-- /.container-fluid -->
-@endsection
-<!-- Delete Modal-->
-@section('model')
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Delete?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete File</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger" id="deletebtn" href=""
-                    onclick="event.preventDefault();
-                                  document.getElementById('delete-dnc-form').submit();">
-                     {{ __('Delete') }}
-                 </a>
-                 <form id="delete-dnc-form" action="" method="POST" class="d-none">
-                     @csrf
-                     @method('delete')
-                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
-<!-- End of Main Content -->
-@section('script')
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="{{asset('admin/js/demo/datatables-demo.js')}}"></script>
 @endsection

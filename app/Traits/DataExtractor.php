@@ -24,7 +24,7 @@ trait DataExtractor
                 if (!preg_match($pattern, array_values($csv->first())[$col])) {
                   return false;
                 }
-
+                // dd("workign");
                 foreach ($csv as $record) {
 
                     $values = $this->formateNumber(array_values($record)[$col]); 

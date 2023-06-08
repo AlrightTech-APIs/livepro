@@ -2,57 +2,67 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title>Login landing page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Truelysell | Template</title>
+
+    <link rel="shortcut icon" href="assets/img/favicon.png">
+
+    <link rel="stylesheet" href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/admin.css') }}">
 </head>
 
 <body>
-    <section class="side" style="background: url({{ asset('assets/images/bk.png') }}) no-repeat;">
-        <img src="{{ asset('assets/images/img.svg') }}" alt="">
-    </section>
-
-    <section class="main">
-        <div class="login-container">
-            <p class="title">Welcome back</p>
-            <div class="separator"></div>
-            <p class="welcome-message">Please, provide login credential to proceed and have access to all our services
-            </p>
-
-            <form class="login-form" action="{{ route('login') }}" method="POST">
-                @csrf
-                <div class="form-control">
-                    <input type="text" name="email" placeholder="Email">
-                    <i class="fas fa-user"></i>
-                    @error('email')
-                        <span class="invalid-feedback" role="alert">
-                            <strong style="color: #e74a3b !important;">{{ $message }}</strong>
-                        </span>
-                    @enderror
+    <div class="main-wrapper">
+        <div class="login-page">
+            <div class="login-body container">
+                <div class="loginbox">
+                    <div class="login-right-wrap">
+                        <div class="account-header">
+                            <div class="account-logo text-center mb-4">
+                                <a href="#">
+                                    <img src="{{ asset('admin/assets/img/logo.png') }}" alt="" class="img-fluid">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="login-header">
+                            <h3>Login <span>LIVE PRO</span></h3>
+                            <p class="text-muted">Access to our Scrubber Tool</p>
+                        </div>
+                        <form class="login-form" action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label class="control-label">Email</label>
+                                <input class="form-control @error('email') is-invalid @enderror" type="email" name="email" placeholder="Enter your email">
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="control-label">Password</label>
+                                <input class="form-control @error('password') is-invalid @enderror" name="password" type="password" placeholder="Enter your password">
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn btn-primary btn-block account-btn" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-control">
-                    <input type="password" name="password" placeholder="Password">
-                    <i class="fas fa-lock"></i>
-                    {{-- <span class="invalid-feedback" role="alert">
-                        <strong style="color: #e74a3b !important;">{{ __("working") }}</strong>
-                    </span> --}}
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong style="color: #e74a3b !important;">{{ $message }}</strong>
-                    </span>
-                @enderror
-                </div>
-
-                <div class="btn_class">
-                    <button class="submit" class="loginbtn">Login</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </section>
-
+    </div>
+    <script src="{{ asset('admin/assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin/assets/js/admin.js') }}"></script>
 </body>
 
 </html>

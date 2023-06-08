@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use toastr;
 use App\Models\lead;
 use App\Models\leadNumber;
-use App\Traits\DataExtractor;
 use Illuminate\Http\Request;
+use App\Traits\DataExtractor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,14 +35,15 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'number' => 'required_without_all:lead',
+            'number' => 'required_without_all:lead|unique:dnc_numbers,number',
             'lead' => 'required_without_all:number',
-            'column' => 'required_if:lead,mimes:csv,xls,xlsx|numeric|min:0',
+            'column' => 'required_if:dnc,mimes:csv,xls,xlsx',
         ]);
         
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        
         $file = $request->file('lead');
         if (isset($request->number)) {
             $number[] = ['number' => str_replace('-','',$request->input('number'))];

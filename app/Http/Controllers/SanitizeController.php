@@ -59,7 +59,6 @@ class SanitizeController extends Controller
      */
     public function store(Request $request)
     {
-
         // dd(dncNumber::pluck('number')->toArray());
         $user = auth()->user();
 
@@ -80,9 +79,9 @@ class SanitizeController extends Controller
             {
                 $data = $this->dataFromFile($file_name);    
             }
-            $numbers = array_column($data, "number");
-
+            
             if ($data) {
+                $numbers = array_column($data, "number");
                 $dncNumbers = dncNumber::pluck('number')->toArray();
                 $leadNumbers = leadNumber::pluck('number')->toArray();
                 $filteredNumbers = array_values(array_diff($numbers, array_merge($dncNumbers, $leadNumbers)));
@@ -113,7 +112,7 @@ class SanitizeController extends Controller
 
                 return back()->with(['file'=>$sanitizedFileName,'success'=>'file has been successfully sanitized']);
             }
-            return back()->with('error', 'error accourd try again with valid cloumn of number in file');
+            return back()->with('error', 'error accourd try again with valid cloumn number');
         }
 
         return back()->with('error', 'empty list of users');
@@ -128,7 +127,7 @@ class SanitizeController extends Controller
             Storage::delete($sanitize->file_name);
         }
         $sanitize->delete();
-        return back()->with('status', 'file sussessfully deleted');
+        return back()->with('success', 'file sussessfully deleted');
     }
     public function deleteSanitized($id)
     {
@@ -138,6 +137,6 @@ class SanitizeController extends Controller
             Storage::delete($sanitize->file);
         }
         $sanitize->delete();
-        return back()->with('status', 'file sussessfully deleted');
+        return back()->with('success', 'file sussessfully deleted');
     }
 }

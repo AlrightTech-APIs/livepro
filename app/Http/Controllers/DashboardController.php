@@ -14,10 +14,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user=User::count();
+        $user=User::latest()->take(5)->get();
         $dnc=dncNumber::count();
         $lead=leadNumber::count();
         $sanitized=sanitized::count();
-        return view('admin.index',compact(['user','lead','dnc','sanitized']));
+        $santized_file=sanitized::latest()->take(5)->get();
+        return view('admin.index',compact(['user','lead','dnc','sanitized','santized_file']));
     }
 }

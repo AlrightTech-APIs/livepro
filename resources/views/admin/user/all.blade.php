@@ -1,119 +1,119 @@
 @extends('admin.master')
-@section('title', 'Manage Projects')
-@section('links')
-    <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
-@endsection
-@section('manage-properties', 'active')
-<!-- Begin Page Content -->
+@section('title', 'Manage Users')
+
 @section('content')
 
+    <div class="page-wrapper">
+        <div class="content container-fluid">
 
-    <!-- main Section for table  -->
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-2 text-gray-800">Manage Users</h1>
-            <a href="{{ route('admin.add.user') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                    class="fas fa-plus fa-sm text-white-50"></i> Add new User</a>
-        </div>
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr valign="center">
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Created At</th>
-                                <th style="min-width: 100px;">Action</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>created at</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @php
-                                $i = 1;
-                            @endphp
-
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>{{ $i++ }}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->created_at }}</td>
-                                    <td>
-                                        <div class="row justify-content-around">
-                                            <a href="{{ route('admin.edit.user',$user->id) }}">
-                                                <i class="fa fa-edit text-warning" style="font-size:20px;" aria-hidden="true"></i>
-                                            </a>
-                                            <a onclick="$('#delete-user-form').attr('action','{{ route('admin.delete.user', $user->id) }}')"
-                                                data-toggle="modal" data-target="#deleteModal">
-                                                <i class="fa fa-trash text-danger" style="font-size:20px;"
-                                                    aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+            <div class="page-header">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="page-title">Users</h3>
+                    </div>
+                    <div class="col-auto text-end">
+                        <a href="{{ route('admin.add.user') }}" class="btn btn-primary add-button ms-3">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
-                {{ $users->onEachSide(5)->links() }}
+            </div>
+
+
+            {{-- <div class="card filter-card" id="filter_inputs">
+            <div class="card-body pb-0">
+                <form>
+                    <div class="row filter-row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>From Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label>To Date</label>
+                                <div class="cal-icon">
+                                    <input class="form-control datetimepicker" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block w-100" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> --}}
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-center mb-0 datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Signup Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <h2 class="table-avatar">
+                                                        {{-- <a href="#" class="avatar avatar-sm me-2">
+                                                            <img class="avatar-img rounded-circle"
+                                                                src="assets/img/customer/user-01.jpg" alt="User Image">
+                                                        </a> --}}
+                                                        <a>{{ $user->name }}</a>
+                                                    </h2>
+                                                </td>
+                                                <td>
+                                                    {{ $user->email }}
+                                                </td>
+                                                <td>{{ $user->created_at }}</td>
+                                                <td>
+                                                    <a href="{{ route('admin.edit.user', $user->id) }}"
+                                                        class="btn btn-sm bg-success-light me-2"> <i
+                                                            class="fas fa-edit me-1"></i> Edit</a>
+                                                    <a class="btn btn-sm bg-danger-light me-2" id="deletebtn" href=""
+                                                        onclick="event.preventDefault();
+                                                                document.getElementById('delete-dnc-form-{{ $user->id }}').submit();">
+                                                        <i class="fas fa-trash me-1"></i> Delete
+                                                    </a>
+                                                    <form id="delete-dnc-form-{{ $user->id }}"
+                                                        action="{{ route('admin.delete.user', $user->id) }}"
+                                                        method="POST" class="d-none">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-
-    <!-- Main Content -->
-    <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <!-- End of Footer -->
-
-    <!-- /.container-fluid -->
 @endsection
-<!-- Delete Modal-->
-@section('model')
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are You Sure to Delete?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Delete" below if you are sure to delete user</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    {{-- <a class="btn btn-danger" id="deletebtn" href="">Delete</a> --}}
-                    <a class="btn btn-danger" id="deletebtn" href=""
-                        onclick="event.preventDefault();
-                                  document.getElementById('delete-user-form').submit();">
-                        {{ __('Delete') }}
-                    </a>
-                    <form id="delete-user-form" action="" method="POST" class="d-none">
-                        @csrf
-                        @method('delete')
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-<!-- End of Main Content -->
-

@@ -34,7 +34,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Number</label>
-                                <input class="form-control" name="number" type="number">
+                                <input class="form-control" name="number" type="number" placeholder="+14705773218">
                             </div>
                             <div class="form-group">
                                 <label>Cloumn</label>

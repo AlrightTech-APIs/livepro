@@ -8,27 +8,23 @@
                 <div class="page-header">
                     <div class="row">
                         <div class="col">
-                            <h3 class="page-title">Scrub New File </h3>
+                            <h3 class="page-title">Scrub A Number</h3>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
-                        @if(session()->has('file'))
-                        <div class="alert d-flex justify-content-center">
-                            <a class="btn btn-success" href="{{ Storage::url(session()->get('file')) }}" download>Download Sanitized File</a>
-                        </div>
-                        @endif
-                        <form action="{{ route('admin.store.sanitize') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.store.single') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
-                                <label>Cloumn</label>
-                                <input class="form-control" name="column" type="number">
-                            </div>
-                            <div class="form-group">
-                                <label>Lead</label>
-                                <input class="form-control" name="sanitize" type="file">
+                                <label>Number</label>
+                                <input class="form-control @error('number') is-invalid @enderror" name="number" type="number" value="{{ old('number') ?? session()->get('number') }}" placeholder="+14705773218">
+                                @error('number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="mt-4">
                                 <button class="btn btn-primary" type="submit">Scrub Now</button>

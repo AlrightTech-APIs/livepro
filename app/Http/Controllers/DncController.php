@@ -34,7 +34,7 @@ class DncController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'number' => 'required_without_all:dnc|unique:dnc_numbers,number',
+            'number' => 'required_without_all:dnc|unique:dnc_numbers,number|min:10|max:11',
             'dnc' => 'required_without_all:number',
             'column' => 'required_if:dnc,mimes:csv,xls,xlsx',
         ]);
@@ -43,7 +43,7 @@ class DncController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         if (isset($request->number)) {
-            $number[] = ['number' => str_replace('-','',$request->input('number'))];
+            $number[] = ['number' => $this->formateNumber($request->input('number'))];
             dncNumber::upsert($number,['number']);
         }
         if ($request->has('dnc')) {

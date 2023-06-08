@@ -39,13 +39,18 @@
                 <ul class="nav header-navbar-rht">
                     <li class="nav-item desc-list">
                         <a href="{{ route('user.add.sanitize') }}" class="nav-link header-login">
-                            <i class="fas fa-plus-circle me-1"></i> <span>Scrub Data</span>
+                            <i class="fas fa-plus-circle me-1"></i> <span>Scrub New File</span>
                         </a>
                     </li>
 
                     <li class="nav-item desc-list">
                         <a href="{{ route('user.sanitized') }}" class="nav-link header-login">
-                            <i class="fas fa-layer-circle me-1"></i> <span>Sanitized Data</span>
+                            <i class="fab fa-buffer me-1"></i> <span>Scrubbed Files</span>
+                        </a>
+                    </li>
+                    <li class="nav-item desc-list">
+                        <a href="{{ route('user.store.single') }}" class="nav-link header-login">
+                            <i class="fas fa-hashtag me-1"></i> <span>Real-Time Check</span>
                         </a>
                     </li>
 

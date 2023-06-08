@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\sanitize;
 use App\Models\dncNumber;
-use App\Models\leadNumber;
 use App\Models\sanitized;
+use App\Models\leadNumber;
 use Illuminate\Http\Request;
 use App\Traits\DataExtractor;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -35,8 +36,37 @@ class SanitizeController extends Controller
     {
         return view('admin.sanitized.all', ['sanitized' => sanitized::paginate(10)]);
     }
+    public function createSingle()
+    {
+        return view('admin.sanitize.single');
+    }
+    public function userSanitize()
+    {
+        return view('client.sanitize.single');
+    }
+    public function storeSingle(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'number' => 'required|min:10|max:11',
+        ]);
+        
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error','Validation Error');
+        }
+        $number=$this->formateNumber($request->input('number'));
+
+        if(dncNumber::where('number', $number)->exists()){
+            return back()->with('warning','Numbers exists in DNC list')->with('number',$request->input('number'));
+        };
+        if(leadNumber::where('number', $number)->exists()){
+            return back()->with('warning','Numbers exists in Lead list')->with('number',$request->input('number'));
+        };
+
+        return back()->with('success','Numbers is Not in Any List')->with('number',$request->input('number'));
+    }
     public function userSanitizedIndex()
     {
+        
         $user=auth()->user();
         $sanitized=$user->sanitized()->paginate(20);
         return view('client.sanitized.all', ['sanitized' => $sanitized]);

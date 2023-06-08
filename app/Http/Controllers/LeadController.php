@@ -35,18 +35,18 @@ class LeadController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'number' => 'required_without_all:lead|unique:dnc_numbers,number',
+            'number' => 'required_without_all:lead|unique:dnc_numbers,number|min:10|max:11',
             'lead' => 'required_without_all:number',
             'column' => 'required_if:dnc,mimes:csv,xls,xlsx',
         ]);
         
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error','Validation Error');
         }
         
         $file = $request->file('lead');
         if (isset($request->number)) {
-            $number[] = ['number' => str_replace('-','',$request->input('number'))];
+            $number[] = ['number' => $this->formateNumber($request->input('number'))];
             leadNumber::upsert($number,['number']);
         }
         if ($file) {
@@ -83,7 +83,7 @@ class LeadController extends Controller
             }
             return back()->with('error', 'error accourd try again with valid cloumn of number in file');
         }
-        return back()->with('success', 'number successfully saved');
+        return back()->with('success', 'Number Successfully Added');
     }
 
     /**

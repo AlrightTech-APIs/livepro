@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'user-access:admin'], functio
     Route::get('/sanitize', [SanitizeController::class, 'index'])->name('admin.sanitize');
 
     Route::get('add/sanitize', [SanitizeController::class, 'create'])->name('admin.add.sanitize');
+    Route::get('sanitize/single', [SanitizeController::class, 'createSingle'])->name('admin.add.single');
+    Route::post('sanitize/single', [SanitizeController::class, 'storeSingle'])->name('admin.store.single');
     Route::post('add/sanitize', [SanitizeController::class, 'store'])->name('admin.store.sanitize');
     Route::delete('delete/sanitize/{sanitize}', [SanitizeController::class, 'destroy'])->name('admin.delete.sanitize');
 
@@ -64,6 +66,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'user-access:admin'], functio
 Route::group(['middleware' => 'auth'], function () {
     Route::get('user/add/sanitize', [SanitizeController::class, 'addSanitize'])->name('user.add.sanitize');
     Route::post('user/add/sanitize', [SanitizeController::class, 'store'])->name('user.store.sanitize');
+
+    Route::get('user/sanitize/single', [SanitizeController::class, 'userSanitize'])->name('user.single.sanitize');
+    Route::post('user/sanitize/single', [SanitizeController::class, 'storeSingle'])->name('user.store.single');
 
     Route::get('user/sanitized', [SanitizeController::class, 'userSanitizedIndex'])->name('user.sanitized');
     Route::delete('user/delete/sanitized/{id}', [SanitizeController::class, 'deleteSanitized'])->name('user.delete.sanitized');

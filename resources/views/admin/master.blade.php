@@ -79,18 +79,22 @@
                         <li class="Route::is('admin.dashboard') ? 'active' : ''">
                             <a href="{{ route('admin.dashboard') }}"><i class="fas fa-columns"></i> <span>Dashboard</span></a>
                         </li>
-                        <li class="{{ Route::is('sanitized') ? 'active' : '' }}">
-                            <a href="{{ route('sanitized') }}"><i class="fas fa-layer-group"></i> <span>Scrubed</span></a>
-                        </li>
                         <li class="{{ Route::is('admin.sanitize') ? 'active' : '' }}">
-                            <a href="{{ route('admin.sanitize') }}"><i class="fab fa-buffer"></i><span>Scrubbing</span> </a>
+                            <a href="{{ route('admin.sanitize') }}"><i class="fab fa-buffer"></i><span>Scrub New File</span> </a>
+                        </li>
+                        <li class="{{ Route::is('sanitized') ? 'active' : '' }}">
+                            <a href="{{ route('sanitized') }}"><i class="fas fa-layer-group"></i> <span>Scrubed Files</span></a>
+                        </li>
+                        <li class="{{ Route::is('admin.add.single') ? 'active' : '' }}">
+                            <a href="{{ route('admin.add.single') }}"><i class="far fa-calendar-check"></i> <span> Real-Time Check
+                            </span></a>
                         </li>
                         <li class="{{ Route::is('admin.lead') ? 'active' : '' }}">
-                            <a href="{{ route('admin.lead') }}"><i class="far fa-calendar-check"></i> <span> Leads
+                            <a href="{{ route('admin.lead') }}"><i class="far fa-calendar-check"></i> <span> Add New Leads
                             </span></a>
                         </li>
                         <li class="{{ Route::is('admin.dnc') ? 'active' : '' }}">
-                            <a href="{{ route('admin.dnc') }}"><i class="fas fa-hashtag"></i> <span>DNC</span></a>
+                            <a href="{{ route('admin.dnc') }}"><i class="fas fa-hashtag"></i> <span>Do Not Call (DNC)</span></a>
                         </li>
                         <li class="{{ Route::is('admin.user') ? 'active' : '' }}">
                             <a href="{{ route('admin.user') }}"><i class="fas fa-user"></i> <span>Users</span></a>

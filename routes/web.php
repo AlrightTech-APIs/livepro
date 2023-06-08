@@ -72,6 +72,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('user/sanitized', [SanitizeController::class, 'userSanitizedIndex'])->name('user.sanitized');
     Route::delete('user/delete/sanitized/{id}', [SanitizeController::class, 'deleteSanitized'])->name('user.delete.sanitized');
+    Route::get('password/update', [UserController::class, 'passwrodForm'])->name('user.password.edit');
+    Route::post('password/update', [UserController::class, 'updatePasswrod'])->name('user.password.update');
+
 });
 // Route::get('user/sanitize', [SanitizeController::class, 'userIndex'])->name('user.sanitize');
 

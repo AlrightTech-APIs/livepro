@@ -44,9 +44,25 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function passwrodForm()
     {
-        //
+       return view('reset');
+    }
+
+    public function updatePasswrod(Request $request)
+    {
+        $request->validate([
+            'old_password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+        $user = auth()->user();
+
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            // Old password doesn't match
+            return redirect()->back()->withInput()->with('error', 'Old password is incorrect.');
+        }
+        $user->update(['password'=>Hash::make($request->input('password'))]);
+        return redirect()->route('user.add.sanitize')->with('success', 'Password updated successfully.');
     }
 
     /**

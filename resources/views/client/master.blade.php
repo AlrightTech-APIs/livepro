@@ -55,30 +55,32 @@
                     </li>
 
                     <li class="nav-item dropdown has-arrow logged-item">
-                        <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <span class="user-img">
-                                <img class="rounded-circle" src="{{ asset('assets/img/provider/provider-01.jpg') }}" alt="" width="31">
+                                <img class="rounded-circle" src="{{ asset('assets/img/provider/provider-01.jpg') }}"
+                                    alt="" width="31">
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <div class="user-header">
                                 <div class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" src="{{ asset('assets/img/provider/provider-01.jpg') }}"
-                                        alt="">
+                                    <img class="avatar-img rounded-circle"
+                                        src="{{ asset('assets/img/provider/provider-01.jpg') }}" alt="">
                                 </div>
                                 <div class="user-text">
                                     <h6 class="text-truncate">{{ auth()->user()->name }}</h6>
                                 </div>
                             </div>
-                            {{-- <a class="dropdown-item" href="index.html">Logout</a> --}}
+                            <a class="dropdown-item" href="{{ route('user.password.edit') }}">Update Password</a>
                             <a class="dropdown-item" id="deletebtn" href=""
-                        onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                             document.getElementById('delete-dnc-form').submit();">
-                       <i class="fas fa-trash me-1"></i> Logout
-                    </a>
-                    <form id="delete-dnc-form"  action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                                Logout
+                            </a>
+                            <form id="delete-dnc-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         </div>
                     </li>
 
